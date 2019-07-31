@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import axios from 'axios'
 Vue.use(Router)
 import store from '../../store/store'
 export default new Router({
@@ -42,8 +43,12 @@ export default new Router({
         {
             path: '/addArticle',
             component: () => import('../views/addArticle.vue'),
-            beforeEnter: (to,from,next) => {
-                if (!localStorage.getItem('user')) {
+            beforeEnter: async (to,from,next) => {
+                let ret = await axios.get('/api/recongnize')
+                let username = ret.data
+                if (!username) {
+                    await axios.get('/logout')
+                    document.getElementById('logout') && document.getElementById('logout').click()
                     store.commit('changeDialogFormVisible', true)
                 }else{
                     next()

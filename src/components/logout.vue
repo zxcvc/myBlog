@@ -1,56 +1,58 @@
 <template>
-  <div>
+<div>
     <el-dropdown :hide-on-click="false">
-      <span class="el-dropdown-link">
+        <span class="el-dropdown-link">
         {{username}}
         <i class="el-icon-arrow-down el-icon--right"></i>
       </span>
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item @click="logout">
-          <a href="#" @click="logout">注销</a>
-        </el-dropdown-item>
-      </el-dropdown-menu>
+        <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item @click="logout">
+                <a href="#" @click="logout" id="logout">注销</a>
+            </el-dropdown-item>
+        </el-dropdown-menu>
     </el-dropdown>
-  </div>
+</div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      username: ""
-    };
-  },
-  methods: {
-    logout() {
-      localStorage.removeItem("user");
-      this.$emit("toLogIn");
-      this.$router.push('/home')
+    data() {
+        return {
+            username: ""
+        };
     },
-    getUser() {
-      if (localStorage.getItem("user")) {
-        let user = JSON.parse(localStorage.getItem("user"));
-        this.username = user.username;
-      } else {
-        this.$emit("toLogIn");
-      }
+    methods: {
+        async logout() {
+            await this.$axios.get('/api/logout')
+            localStorage.removeItem("user");
+            this.$emit("toLogIn");
+            this.$router.push('/home')
+        },
+        async getUser() {
+            let ret = await this.$axios.get('/api/recongnize')
+            if(ret.data){
+              this.username = ret.data
+            }else{
+              this.$emit('toLogIn')
+            }
+        }
+    },
+    created() {
+        this.getUser()
+    },
+    beforeUpdate() {
+        this.$nextTick(this.getUser)
     }
-  },
-  created() {
-    this.$nextTick(this.getUser());
-  },
-  beforeUpdate() {
-    this.$nextTick(this.getUser());
-  }
 };
 </script>
 
 <style lang="scss" scoped>
 .el-dropdown-link {
-  cursor: pointer;
-  color: #409eff;
+    cursor: pointer;
+    color: #409eff;
 }
+
 .el-icon-arrow-down {
-  font-size: 12px;
+    font-size: 12px;
 }
 </style>

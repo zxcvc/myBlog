@@ -71,8 +71,8 @@ export default {
         duration: duration,
         center: true,
         onClose: () => {
-          if (!this.success) return;
-          this.$router.push("/home");
+          if (!this.success) return
+          this.$router.push("/home")
         }
       });
     },

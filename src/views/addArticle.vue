@@ -51,7 +51,7 @@ export default {
         }
     },
     methods: {
-        change(content){
+        change(content) {
             this.content = content
         },
         onEditorBlur(quill) {
@@ -82,8 +82,8 @@ export default {
             }
 
         },
-        getAuthor() {
-            this.author = JSON.parse(localStorage.getItem("user")).username;
+        async getAuthor() {
+
         },
 
         async addArticle() {
@@ -122,10 +122,9 @@ export default {
         },
     },
     created() {
-        this.getAuthor()
         this.addArticle = this.throttle(this.addArticle, 1500)
     },
-    mounted(){
+    mounted() {
         // this.$refs.content.style.background = 'white'
         // this.$refs.content.requestFullscreen()
     },
@@ -146,5 +145,4 @@ export default {
 .quill {
     min-height: 200px;
 }
-
 </style>
