@@ -16,7 +16,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie : {
-    maxAge : 1000 * 10, // 设置 session 的有效时间，单位毫秒
+    maxAge : 1000 * 60 * 60 * 2, // 设置 session 的有效时间，单位毫秒
 }
 }))
 
@@ -29,9 +29,6 @@ app.listen(3000, () => {
   console.log('ok=========')
 })
 
-
-
-// 配置参数
 
 
 app.use(router)

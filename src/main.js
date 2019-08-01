@@ -196,7 +196,7 @@ Vue.prototype.$Message = Message
 axios.defaults.headers = {
   'Content-Type': 'application/x-www-form-urlencoded'
 }
-axios.defaults.baseURL = '/blog'
+// axios.defaults.baseURL = '/blog'
 Vue.prototype.$axios = axios
 Vue.prototype.$qs = qs
 Vue.filter('fmTime', function (val) {
@@ -216,11 +216,6 @@ Vue.filter('fmTime', function (val) {
 
 new Vue({
   el: '#app',
-  data() {
-    return {
-
-    }
-  },
   router,
   store,
   render: h => h(App)

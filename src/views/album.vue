@@ -152,7 +152,6 @@ export default {
             }
         }
     }
-    .upload {}
 }
 
 .img {

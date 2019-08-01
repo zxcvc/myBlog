@@ -67,7 +67,7 @@ export default {
             console.log('editor change!', quill, html, text)
             this.content = html
         },
-        check() {
+        async check() {
             if (!this.title) {
                 this.tips = '请输入文章标题'
                 return
@@ -80,9 +80,7 @@ export default {
                 this.tips = '请输入文章内容'
                 return
             }
-
-        },
-        async getAuthor() {
+            
 
         },
 
@@ -92,6 +90,14 @@ export default {
                 this.open(this.tips, 'error', 1500)
                 return
             }
+            let username = await this.$axios.get('/api/recongnize')
+            if (!username.data) {
+                let logout_el = document.getElementById('logout')
+                logout_el && logout_el.click()
+                this.$store.commit('changeDialogFormVisible', true)
+                return
+            }
+            this.author = username.data
             let ret = await this.$axios.post(
                 "/api/addArticle",
                 this.$qs.stringify({

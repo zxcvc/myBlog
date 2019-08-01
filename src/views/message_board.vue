@@ -42,18 +42,21 @@ export default {
             let ret = await this.$axios.get('/api/getMessagesCount')
             this.messagesCount = parseInt(ret.data)
         },
-        open(msg, typ, duration) {
+        open(msg, type, duration) {
             this.$Message({
                 message: msg,
-                type: typ,
+                type: type,
                 duration: duration,
                 center: true,
-                onClose: this.get_message
+                onClose: this.get_message(1,5)
             })
         },
+        async get_username(){
+            let ret = await this.$axios.get('/api/recongnize')
+            this.username = ret.data
+        },
         async publish() {
-            let user = localStorage.getItem("user") || JSON.stringify({ username: '匿名' })
-            this.username = JSON.parse(user).username;
+            await this.get_username()
             if (!this.msg) {
                 this.open('请输入内容', 'error', 1500)
                 return
@@ -61,7 +64,7 @@ export default {
             let message_info = {
                 message: this.msg,
                 time: new Date(),
-                username: this.username
+                username: this.username || '匿名'
             }
             let ret = await this.$axios.post('/api/addMessage', this.$qs.stringify(message_info))
             if (ret) {

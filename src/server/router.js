@@ -201,8 +201,8 @@ router.get('/sts', function (req, res, next) {
   // TODO 这里根据自己业务需要做好放行判断
 
   // 获取临时密钥
-  let shortBucketName = config.bucket.substr(0, config.bucket.lastIndexOf('-'));
-  let appId = config.bucket.substr(1 + config.bucket.lastIndexOf('-'));
+  // let shortBucketName = config.bucket.substr(0, config.bucket.lastIndexOf('-'));
+  // let appId = config.bucket.substr(1 + config.bucket.lastIndexOf('-'));
   // let policy = {
   //     'version': '2.0',
   //     'statement': [{

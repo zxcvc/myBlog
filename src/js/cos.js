@@ -1,5 +1,6 @@
 import COS from 'cos-js-sdk-v5'
 import axios from 'axios'
+// axios.defaults.baseURL = '/blog'
 async function get_cos() {
   let ret = await axios.get('/api/sts')
   let reconginize = ret.data
